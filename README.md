@@ -24,11 +24,14 @@ This Flutter application implements a customizable dock that allows users to int
    ```bash
    git clone https://github.com/yourusername/flutter-dock.git
    cd flutter-dock
+   ````
 
 2. Install dependencies:
+   ```bash
    flutter pub get
-
+   ```
 3. Ensure the asset images for the icons are placed in the assets directory. Update your pubspec.yaml to include:
+   ```bash
    flutter:
      assets:
        - assets/astro.png
@@ -37,6 +40,9 @@ This Flutter application implements a customizable dock that allows users to int
        - assets/note.png
        - assets/popclip.png
        - assets/prompt-3.png
+   ```
 
 4. Run the application:
+   ```bash
    flutter run
+   ```
