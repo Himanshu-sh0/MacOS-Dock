@@ -161,10 +161,10 @@ class DockState extends State<Dock> {
 
 /// [ Second ] _ [ approach]
 /// Use [ buildShelf ] function is to build the shelf to display icons.
-///
+/// It calculates the size of the Icons and adjust accordingly.
 /// Ue [ buildBackground ] function to build the background .
 /// Instead of wrapping the Stack with another Container and Selector.
-///  ( reduce number of times build runs ).
+/// Place it in the stack. ( reduce number of times build runs ).
 
 /*
 // Builds the icon shelf for displaying icons.
