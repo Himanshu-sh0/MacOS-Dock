@@ -51,6 +51,11 @@ class IconProvider extends ChangeNotifier {
   ///  [ onHoverExit ] is called when Mouse exit the [ icon ] area
 
   void onHoverUpdateIcon(int newIndex) {
+    for (int i = 0; i < _icons.length; ++i) {
+      AppIcon? e = _icons[i];
+      print("$i $e");
+    }
+
     _hoveredIndex = newIndex;
     if (_draggedIndex != null &&
         newIndex >= 0 &&

@@ -82,10 +82,11 @@ class DockState extends State<Dock> {
   /// [ child ] Icon to be dragged
   Widget buildIconDragger(int index) {
     return Draggable(
-      axis: Axis.horizontal,
+      // axis: Axis.horizontal,
       onDragStarted: () => iconProvider.onDragStarted(index),
       onDragEnd: iconProvider.onDragEnd,
       data: iconProvider.iconAt(index),
+      // childWhenDragging: SizedBox(),
       feedback: buildIcon(index),
       child: buildIcon(index),
     );

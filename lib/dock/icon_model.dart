@@ -33,6 +33,34 @@ extension AppIconExtension on List<AppIcon?> {
     );
   }
 
+  void shiftAppIcon(int index, AppIcon? icon) {
+    if (index >= 0 && index <= length) {
+      // Allow insertion at the end
+      if (icon == null) {
+        throw ArgumentError("Icon cannot be null.");
+      }
+
+      // Shift elements to the right
+      for (int i = length - 1; i >= index; --i) {
+        if (i == length - 1) {
+          add(this[i]);
+        } else {
+          this[i + 1] = this[i];
+        }
+      }
+
+      // Insert the new icon at the specified index
+      this[index] = icon;
+
+      int nullIndex = indexOf(null);
+      if (nullIndex > -1) {
+        removeAt(nullIndex);
+      }
+    } else {
+      throw RangeError("No appIcon exists at Index: $index.");
+    }
+  }
+
   void updateAppIcon(int index, AppIcon? icon) {
     if (index >= 0 && index < length) {
       this[index] = icon;
