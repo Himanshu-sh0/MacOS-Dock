@@ -23,7 +23,9 @@ class AppIcon {
   int get hashCode => iconId.hashCode ^ iconName.hashCode ^ iconPath.hashCode;
 }
 
-/// An extension on a list of type List<AppIcon?> to update an Icon in the list.
+/// An extension on a list of type List<AppIcon?> to 
+/// Update an Icon in the list.
+/// Shift App icons
 /// Or, fetch an item with a specific itemID
 extension AppIconExtension on List<AppIcon?> {
   AppIcon? getAppIconByID(int id) {

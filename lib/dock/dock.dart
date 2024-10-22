@@ -18,7 +18,8 @@ class DockState extends State<Dock> {
     iconProvider = Provider.of<IconProvider>(context, listen: false);
     iconProvider.updateIconSize = MediaQuery.of(context).size.width;
     return Scaffold(
-      // Listening to the selectedIcon to display in the background
+      /// Listening to the [ selectedIcon ] to display app icon in the background
+      /// See the comments at the bottom of the file for alternative appraoch.
       body: Selector<IconProvider, AppIcon?>(
           selector: (context, provider) => provider.selectedIcon,
           builder: (context, icon, child) => Container(
@@ -39,7 +40,7 @@ class DockState extends State<Dock> {
                       buildIconShelf(),
                       Padding(
                         padding: const EdgeInsets.all(10),
-                        child: Row(
+                        child: Row(  // A row containing App icons
                           crossAxisAlignment: CrossAxisAlignment.end,
                           mainAxisSize: MainAxisSize.min,
                           children: List.generate(
@@ -55,11 +56,11 @@ class DockState extends State<Dock> {
     );
   }
 
-  // Build and control the Hover effect of each Icon.
-  // Along with that, swaps the icons if drag is in progress.
+  /// Build and control the Hover effect of each Icon.
+  /// Along with that, swaps the icons if drag is in progress.
   Widget buildIconHover(int index) {
     return Consumer<IconProvider>(
-      builder: (context, hoveredItem, child) {
+      builder: (context, provider, child) {
         return MouseRegion(
           cursor: SystemMouseCursors.click,
           onEnter: (_) => iconProvider.onHoverUpdateIcon(index),
@@ -68,7 +69,7 @@ class DockState extends State<Dock> {
             mainAxisSize: MainAxisSize.min,
             children: [
               iconName(index),
-              buildIconDragger(index),
+              buildIconDragger(index,provider.isHoveringWhileDragging),
             ],
           ),
         );
@@ -80,16 +81,13 @@ class DockState extends State<Dock> {
   /// [ data ]The data to be handled during this drag.
   /// [ feedback ] Widget to be displayed under the cursor, while dragging.
   /// [ child ] Icon to be dragged
-  Widget buildIconDragger(int index) {
-    return Selector<IconProvider, bool>(
-      selector: (context, provider) => provider.isHoveringWhileDragging,
-      builder: (context, isHoverAndDrag, _) => Draggable(
-        onDragStarted: () => iconProvider.onDragStart(index),
-        onDragEnd: iconProvider.onDragEnd,
-        data: iconProvider.iconAt(index),
-        feedback: buildIcon(index, isHoverAndDrag),
-        child: buildIcon(index, isHoverAndDrag),
-      ),
+  Widget buildIconDragger(int index,bool isHoverAndDrag) {
+    return Draggable(
+      onDragStarted: () => iconProvider.onDragStart(index),
+      onDragEnd: iconProvider.onDragEnd,
+      data: iconProvider.iconAt(index),
+      feedback: buildIcon(index, isHoverAndDrag),
+      child: buildIcon(index, isHoverAndDrag),
     );
   }
 
@@ -120,7 +118,7 @@ class DockState extends State<Dock> {
         : const SizedBox();
   }
 
-  // Build the Animated Icon
+  /// Build the Animated Icon
   Widget buildIcon(int index, bool isHoverAndDrag) {
     AppIcon? icon = iconProvider.iconAt(index);
     final (size, translationY) = iconProvider.getSizeAndTranslation(index);
@@ -139,7 +137,7 @@ class DockState extends State<Dock> {
     );
   }
 
-  // Builds the icon shelf for displaying icons.
+  /// Builds the icon shelf for displaying icons.
   Widget buildIconShelf() {
     return Positioned(
       left: 0,
