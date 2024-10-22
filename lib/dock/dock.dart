@@ -132,8 +132,8 @@ class DockState extends State<Dock> {
         transform: Matrix4.identity()
           ..translate(0.0, translationY, 0.0), // Elevate the icon
         alignment: AlignmentDirectional.bottomCenter,
-        height: !isHoverAndDrag && icon == null ? 0 : size,
-        width: !isHoverAndDrag && icon == null ? 0 : size,
+        height: !isHoverAndDrag && icon == null ? null : size,
+        width: !isHoverAndDrag && icon == null ? null : size,
         child: icon != null ? Image.asset(icon.iconPath) : null,
       ),
     );
