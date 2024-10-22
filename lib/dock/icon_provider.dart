@@ -23,6 +23,8 @@ class IconProvider extends ChangeNotifier {
 
   // Getters...
   bool get isHovering => _hoveredIndex != null;
+  bool get isHoveringWhileDragging =>
+      hoveredIndex != null && _draggedIcon != null;
   int? get hoveredIndex => _hoveredIndex;
   int? get draggedIndex => _draggedIndex;
   AppIcon? get selectedIcon => _selectedIcon;
@@ -52,13 +54,19 @@ class IconProvider extends ChangeNotifier {
 
   void onHoverUpdateIcon(int newIndex) {
     _hoveredIndex = newIndex;
-    if (_draggedIndex != null &&
-        newIndex >= 0 &&
-        newIndex < _icons.length &&
-        _draggedIndex != newIndex) {
-      final temp = _icons[_draggedIndex!];
-      _icons.updateAppIcon(_draggedIndex!, _icons[newIndex]);
-      _icons.updateAppIcon(newIndex, temp);
+    if (_draggedIndex != null && _draggedIndex != newIndex) {
+      if (draggedIndex! < newIndex) {
+        for (int i = draggedIndex!; i < newIndex; ++i) {
+          AppIcon? icon = _icons[i + 1];
+          _icons.updateAppIcon(i, icon);
+        }
+      } else {
+        for (int i = draggedIndex!; i > newIndex; --i) {
+          AppIcon? icon = _icons[i - 1];
+          _icons.updateAppIcon(i, icon);
+        }
+      }
+      _icons.updateAppIcon(newIndex, null);
       _draggedIndex = newIndex;
     }
     notifyListeners();
