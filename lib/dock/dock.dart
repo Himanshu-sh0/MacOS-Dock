@@ -81,14 +81,15 @@ class DockState extends State<Dock> {
   /// [ feedback ] Widget to be displayed under the cursor, while dragging.
   /// [ child ] Icon to be dragged
   Widget buildIconDragger(int index) {
-    return Draggable(
-      // axis: Axis.horizontal,
-      onDragStarted: () => iconProvider.onDragStarted(index),
-      onDragEnd: iconProvider.onDragEnd,
-      data: iconProvider.iconAt(index),
-      // childWhenDragging: SizedBox(),
-      feedback: buildIcon(index),
-      child: buildIcon(index),
+    return Selector<IconProvider, bool>(
+      selector: (context, provider) => provider.isHoveringWhileDragging,
+      builder: (context, isHoverAndDrag, _) => Draggable(
+        onDragStarted: () => iconProvider.onDragStarted(index),
+        onDragEnd: iconProvider.onDragEnd,
+        data: iconProvider.iconAt(index),
+        feedback: buildIcon(index, isHoverAndDrag),
+        child: buildIcon(index, isHoverAndDrag),
+      ),
     );
   }
 
@@ -120,7 +121,7 @@ class DockState extends State<Dock> {
   }
 
   // Build the Animated Icon
-  Widget buildIcon(int index) {
+  Widget buildIcon(int index, bool isHoverAndDrag) {
     AppIcon? icon = iconProvider.iconAt(index);
     final (size, translationY) = iconProvider.getSizeAndTranslation(index);
 
@@ -131,8 +132,8 @@ class DockState extends State<Dock> {
         transform: Matrix4.identity()
           ..translate(0.0, translationY, 0.0), // Elevate the icon
         alignment: AlignmentDirectional.bottomCenter,
-        height: size,
-        width: size,
+        height: !isHoverAndDrag && icon == null ? null : size,
+        width: !isHoverAndDrag && icon == null ? null : size,
         child: icon != null ? Image.asset(icon.iconPath) : null,
       ),
     );
