@@ -84,7 +84,7 @@ class DockState extends State<Dock> {
     return Selector<IconProvider, bool>(
       selector: (context, provider) => provider.isHoveringWhileDragging,
       builder: (context, isHoverAndDrag, _) => Draggable(
-        onDragStarted: () => iconProvider.onDragStarted(index),
+        onDragStarted: () => iconProvider.onDragStart(index),
         onDragEnd: iconProvider.onDragEnd,
         data: iconProvider.iconAt(index),
         feedback: buildIcon(index, isHoverAndDrag),

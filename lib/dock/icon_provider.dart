@@ -29,8 +29,6 @@ class IconProvider extends ChangeNotifier {
   int? get draggedIndex => _draggedIndex;
   AppIcon? get selectedIcon => _selectedIcon;
   double get iconSize => _iconSize;
-  // Maximum size an icon can scale to.
-  double get scaledSize => isHovering ? _iconSize * 1.6 : _iconSize;
   int get totalIcons => _icons.isEmpty ? 1 : _icons.length;
 
   // Setters...
@@ -53,12 +51,7 @@ class IconProvider extends ChangeNotifier {
   ///  [ onHoverExit ] is called when Mouse exit the [ icon ] area
 
   void onHoverUpdateIcon(int newIndex) {
-    for (int i = 0; i < _icons.length; ++i) {
-      AppIcon? e = _icons[i];
-      print("$i $e");
-    }
-
-    _hoveredIndex = newIndex;
+        _hoveredIndex = newIndex;
     if (_draggedIndex != null && _draggedIndex != newIndex) {
       if (draggedIndex! < newIndex) {
         for (int i = draggedIndex!; i < newIndex; ++i) {
@@ -87,7 +80,7 @@ class IconProvider extends ChangeNotifier {
   /// And set the current ( dragged ) icon as null.
   /// [ onDragEnd ] is called when the drag is completed and restore the current  icon ; [ _draggedIcon ].
 
-  void onDragStarted(int index) {
+  void onDragStart(int index) {
     _draggedIcon = _icons[index];
     _draggedIndex = index;
     _icons.updateAppIcon(index, null);
