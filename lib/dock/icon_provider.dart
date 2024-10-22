@@ -90,7 +90,6 @@ class IconProvider extends ChangeNotifier {
   }
 
   void onDragEnd(DraggableDetails _) {
-    print("$_draggedIndex");
     _icons.updateAppIcon(_draggedIndex!, _draggedIcon);
     _draggedIndex = null;
     _draggedIcon = null;
