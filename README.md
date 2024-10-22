@@ -8,6 +8,7 @@ This Flutter application implements a customizable dock that allows users to int
 - **Drag and Drop**: Icons can be dragged to reorder them within the dock.
 - **Hover Effects**: Icons scale up and elevate when hovered over, enhancing user interaction.
 - **Background Change**: The background image changes based on the selected icon.
+- **Shrink and Expand the dock**: Dock shrink when you drag the icon outside the dock and expand when when you drag the icon back to the dock.
 
 ## Getting Started
 
